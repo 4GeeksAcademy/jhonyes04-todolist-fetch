@@ -65,12 +65,22 @@ export const deleteTodo = async (id) => {
     return true;
 };
 
-export const deleteAllTodos = async () => {
-    const response = await fetch(`${URL_API}/users/${USUARIO}`, {
-        method: 'DELETE',
-    });
+export const deleteAllTodos = async (tareas) => {
+    try {
+        const eliminarTareas = tareas.map((tarea) =>
+            fetch(`${URL_API}/todos/${tarea.id}`, {
+                method: 'DELETE',
+            }),
+        );
 
-    if (!response.ok) throw new Error('Error al eliminar el usuario/tareas');
+        const response = await Promise.all(eliminarTareas);
 
-    return true;
+        const todasOk = response.every((res) => res.ok);
+
+        if (!todasOk) throw new Error('Algunas tareas no pudieron eliminarse');
+
+        return true;
+    } catch (error) {
+        console.error('Error al eliminar todas las tareas:', error);
+    }
 };

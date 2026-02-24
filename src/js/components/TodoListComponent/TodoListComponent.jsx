@@ -39,14 +39,13 @@ export const TodoListComponent = () => {
             await api.postTodo(tarea);
             await obtenerTareas();
         } catch (error) {
-            console.error('No se pudo agregar:', error);
+            console.error('No se pudo agregar la tarea:', error);
 
-            setTareas((prev) =>
-                prev.filter(
-                    (tareaTemporal) =>
-                        tareaTemporal.id !== nuevaTareaTemporal.id,
-                ),
+            const estadoAnteriorTareas = tareas.filter(
+                (prev) => prev.id !== nuevaTareaTemporal.id,
             );
+
+            setTareas(estadoAnteriorTareas);
         }
     };
 
@@ -55,18 +54,18 @@ export const TodoListComponent = () => {
             await api.deleteTodo(id);
             await obtenerTareas();
         } catch (error) {
-            console.error('No se pudo eliminar:', error);
+            console.error('No se pudo eliminar la tarea:', error);
         }
     };
 
-    const eliminarTodasTareas = async () => {
+    const eliminarTareasTodas = async () => {
         try {
-            await api.deleteAllTodos();
+            await api.deleteAllTodos(tareas);
 
             setTareas([]);
             await obtenerTareas();
         } catch (error) {
-            console.error('Error al limpiar todo:', error);
+            console.error('Error al eliminar todas las tareas:', error);
         }
     };
 
@@ -79,7 +78,7 @@ export const TodoListComponent = () => {
                         <ListForm agregarTarea={agregarTarea} />
                     </div>
                     <ButtonComponent
-                        eliminar={eliminarTodasTareas}
+                        eliminar={eliminarTareasTodas}
                         numeroTareas={tareas.length}
                     />
                 </div>
