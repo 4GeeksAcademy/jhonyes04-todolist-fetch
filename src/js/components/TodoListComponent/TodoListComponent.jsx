@@ -105,7 +105,6 @@ export const TodoListComponent = () => {
                     {tareas.length > 0 && (
                         <ButtonComponent
                             eliminarTareasTodas={eliminarTareasTodas}
-                            numeroTareas={tareas.length}
                         />
                     )}
                 </div>

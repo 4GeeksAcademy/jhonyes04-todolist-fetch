@@ -1,6 +1,6 @@
 import Swal from 'sweetalert2';
 
-export const ButtonComponent = ({ eliminarTareasTodas, numeroTareas }) => {
+export const ButtonComponent = ({ eliminarTareasTodas }) => {
     const handleClickEliminar = () => {
         Swal.fire({
             title: '¿Eliminar todas las tareas?',
@@ -20,8 +20,7 @@ export const ButtonComponent = ({ eliminarTareasTodas, numeroTareas }) => {
     return (
         <button
             onClick={handleClickEliminar}
-            className={`btn m-3 ${numeroTareas > 0 ? 'btn-danger' : 'btn-secondary'}`}
-            disabled={numeroTareas <= 0}
+            className="btn btn-danger m-3 ms-0"
             title="Eliminar todas las tareas"
         >
             <i className="fa-solid fa-trash-can"></i>
