@@ -1,15 +1,21 @@
 const URL_API = 'https://playground.4geeks.com/todo';
 const USUARIO = 'jhonyes04';
 
-export const getUsers = async () => {
-    const response = await fetch(`${URL_API}/users`);
+// export const existeUsuario = async (nombreUsuario) => {
+//     const usuarios = await getUsers();
 
-    if (!response.ok) throw new Error('Error al obtener usuarios');
+//     return usuarios.some((usuario) => usuario === nombreUsuario);
+// };
 
-    const data = await response.json();
+// export const getUsers = async () => {
+//     const response = await fetch(`${URL_API}/users`);
 
-    return data;
-};
+//     if (!response.ok) throw new Error('Error al obtener usuarios');
+
+//     const data = await response.json();
+
+//     return data.users.map((usuario) => usuario.name);
+// };
 
 export const postUser = async () => {
     try {
@@ -18,9 +24,7 @@ export const postUser = async () => {
             headers: { 'Content-Type': 'application/json' },
         });
 
-        if (response.ok || response.status === 400) return true;
-
-        return false;
+        return response.ok || response.status === 400;
     } catch (error) {
         console.error('Error al crear usuario:', error);
         return false;
@@ -82,5 +86,6 @@ export const deleteAllTodos = async (tareas) => {
         return true;
     } catch (error) {
         console.error('Error al eliminar todas las tareas:', error);
+        return false;
     }
 };

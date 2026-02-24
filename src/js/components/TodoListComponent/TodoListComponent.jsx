@@ -5,10 +5,9 @@ import { ListCount } from './ListCount/ListCount';
 import { ButtonComponent } from '../ButtonComponent';
 import * as api from '../../../api/api';
 
+import { toast } from 'react-toastify';
+import Swal from 'sweetalert2';
 import './TodoListComponent.css';
-
-const URL_API = 'https://playground.4geeks.com/todo';
-const USUARIO = 'pepito';
 
 export const TodoListComponent = () => {
     const [tareas, setTareas] = useState([]);
@@ -27,6 +26,23 @@ export const TodoListComponent = () => {
     };
 
     const agregarTarea = async (tarea) => {
+        const existeTarea = tareas.some((t) => t.label === tarea);
+
+        if (existeTarea) {
+            toast.error(
+                <span>
+                    La tarea <strong>{tarea}</strong> ya existe
+                </span>,
+                {
+                    toastId: 'tarea-existe',
+                    position: 'top-center',
+                    autoClose: 2000,
+                    closeOnClick: false,
+                },
+            );
+            return;
+        }
+
         const nuevaTareaTemporal = {
             id: Date.now(),
             label: tarea,
@@ -38,6 +54,17 @@ export const TodoListComponent = () => {
         try {
             await api.postTodo(tarea);
             await obtenerTareas();
+
+            toast.success(
+                <span>
+                    Tarea <strong>{tarea}</strong> creada correctamente
+                </span>,
+                {
+                    position: 'top-center',
+                    autoClose: 2000,
+                    closeOnClick: false,
+                },
+            );
         } catch (error) {
             console.error('No se pudo agregar la tarea:', error);
 
@@ -60,8 +87,15 @@ export const TodoListComponent = () => {
 
     const eliminarTareasTodas = async () => {
         try {
-            await api.deleteAllTodos(tareas);
+            const eliminadas = await api.deleteAllTodos(tareas);
 
+            if (!eliminadas) return;
+
+            Swal.fire({
+                title: 'Eliminadas',
+                text: `Se ${tareas.length > 1 ? 'han' : 'ha'} eliminado ${tareas.length} ${tareas.length > 1 ? 'tareas' : 'tarea'}`,
+                icon: 'success',
+            });
             setTareas([]);
             await obtenerTareas();
         } catch (error) {
@@ -78,7 +112,7 @@ export const TodoListComponent = () => {
                         <ListForm agregarTarea={agregarTarea} />
                     </div>
                     <ButtonComponent
-                        eliminar={eliminarTareasTodas}
+                        eliminarTareasTodas={eliminarTareasTodas}
                         numeroTareas={tareas.length}
                     />
                 </div>

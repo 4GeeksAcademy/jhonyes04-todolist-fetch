@@ -22,16 +22,6 @@ export const ListForm = ({ agregarTarea }) => {
         }
 
         agregarTarea(valor);
-        toast.success(
-            <span>
-                Tarea <strong>{valor}</strong> creada correctamente
-            </span>,
-            {
-                position: 'top-center',
-                autoClose: 2000,
-                closeOnClick: false,
-            },
-        );
         setValor('');
     };
 

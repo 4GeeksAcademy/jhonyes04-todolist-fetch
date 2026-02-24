@@ -1,9 +1,6 @@
 import Swal from 'sweetalert2';
 
-export const ButtonComponent = ({
-    eliminar: eliminarTodasTareas,
-    numeroTareas,
-}) => {
+export const ButtonComponent = ({ eliminarTareasTodas, numeroTareas }) => {
     const handleClickEliminar = () => {
         Swal.fire({
             title: '¿Eliminar todas las tareas?',
@@ -15,12 +12,7 @@ export const ButtonComponent = ({
             confirmButtonText: 'Sí, eliminar',
         }).then((result) => {
             if (result.isConfirmed) {
-                eliminarTodasTareas();
-                Swal.fire({
-                    title: 'Eliminadas',
-                    text: 'Todas las tareas han sido eliminadas',
-                    icon: 'success',
-                });
+                eliminarTareasTodas();
             }
         });
     };
