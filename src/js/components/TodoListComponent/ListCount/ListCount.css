@@ -1,0 +1,16 @@
+.numero-tareas {
+    background: #e1e1e1;
+    height: 30px;
+    border: 1px solid #dedede;
+    position: relative;
+}
+
+.numero-tareas p {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #a2a2a2;
+    text-align: start;
+    font-size: 0.8rem;
+    padding: 20px;
+}
