@@ -69,9 +69,11 @@ export const deleteTodo = async (id) => {
     return true;
 };
 
-export const deleteAllTodos = async (tareas) => {
+export const deleteAllTodos = async () => {
     try {
-        const eliminarTareas = tareas.map((tarea) =>
+        const allTodos = await getTodos();
+
+        const eliminarTareas = allTodos.map((tarea) =>
             fetch(`${URL_API}/todos/${tarea.id}`, {
                 method: 'DELETE',
             }),

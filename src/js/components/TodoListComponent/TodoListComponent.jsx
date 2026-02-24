@@ -17,12 +17,8 @@ export const TodoListComponent = () => {
     }, []);
 
     const obtenerTareas = async () => {
-        try {
-            const todos = await api.getTodos();
-            setTareas(todos);
-        } catch (error) {
-            console.error(error.message);
-        }
+        const todos = await api.getTodos();
+        setTareas(todos);
     };
 
     const agregarTarea = async (tarea) => {
@@ -77,30 +73,22 @@ export const TodoListComponent = () => {
     };
 
     const handleClickEliminarTarea = async (id) => {
-        try {
-            await api.deleteTodo(id);
-            await obtenerTareas();
-        } catch (error) {
-            console.error('No se pudo eliminar la tarea:', error);
-        }
+        await api.deleteTodo(id);
+        await obtenerTareas();
     };
 
     const eliminarTareasTodas = async () => {
-        try {
-            const eliminadas = await api.deleteAllTodos(tareas);
+        const eliminadas = await api.deleteAllTodos();
 
-            if (!eliminadas) return;
+        if (!eliminadas) return;
 
-            Swal.fire({
-                title: 'Eliminadas',
-                text: `Se ${tareas.length > 1 ? 'han' : 'ha'} eliminado ${tareas.length} ${tareas.length > 1 ? 'tareas' : 'tarea'}`,
-                icon: 'success',
-            });
-            setTareas([]);
-            await obtenerTareas();
-        } catch (error) {
-            console.error('Error al eliminar todas las tareas:', error);
-        }
+        Swal.fire({
+            title: 'Eliminadas',
+            text: `Se ${tareas.length > 1 ? 'han' : 'ha'} eliminado ${tareas.length} ${tareas.length > 1 ? 'tareas' : 'tarea'}`,
+            icon: 'success',
+        });
+        setTareas([]);
+        await obtenerTareas();
     };
 
     return (
@@ -109,12 +97,17 @@ export const TodoListComponent = () => {
             <div className="todos">
                 <div className="d-flex">
                     <div className="w-100">
-                        <ListForm agregarTarea={agregarTarea} />
+                        <ListForm
+                            agregarTarea={agregarTarea}
+                            numeroTareas={tareas.length}
+                        />
                     </div>
-                    <ButtonComponent
-                        eliminarTareasTodas={eliminarTareasTodas}
-                        numeroTareas={tareas.length}
-                    />
+                    {tareas.length > 0 && (
+                        <ButtonComponent
+                            eliminarTareasTodas={eliminarTareasTodas}
+                            numeroTareas={tareas.length}
+                        />
+                    )}
                 </div>
 
                 <ListTareas
