@@ -56,7 +56,6 @@ export const TodoListComponent = () => {
                     La tarea <strong>{tarea}</strong> ya existe
                 </span>,
                 {
-                    toastId: 'tarea-existe',
                     position: 'top-center',
                     autoClose: 2000,
                     closeOnClick: false,
