@@ -69,13 +69,17 @@ export const postTodo = async (tarea) => {
 };
 
 export const deleteTodo = async (id) => {
-    const response = await fetch(`${URL_API}/todos/${id}`, {
-        method: 'DELETE',
-    });
+    try {
+        const response = await fetch(`${URL_API}/todos/${id}`, {
+            method: 'DELETE',
+        });
 
-    if (!response.ok) throw new Error('Error al eliminar tarea');
+        if (!response.ok) throw new Error('Error al eliminar tarea');
 
-    return true;
+        return true;
+    } catch (error) {
+        console.error('Error al eliminar tarea:', error);
+    }
 };
 
 export const deleteAllTodos = async () => {
