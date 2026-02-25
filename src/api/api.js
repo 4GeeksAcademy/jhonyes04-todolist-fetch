@@ -24,7 +24,7 @@ export const postUser = async () => {
             headers: { 'Content-Type': 'application/json' },
         });
 
-        return response.ok || response.status === 400;
+        return response.ok;
     } catch (error) {
         console.error('Error al crear usuario:', error);
         return false;
