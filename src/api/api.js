@@ -1,21 +1,30 @@
 const URL_API = 'https://playground.4geeks.com/todo';
 const USUARIO = 'jhonyes04';
 
-// export const existeUsuario = async (nombreUsuario) => {
-//     const usuarios = await getUsers();
+export const existeUsuario = async (nombreUsuario) => {
+    try {
+        const usuarios = await getUsers();
 
-//     return usuarios.some((usuario) => usuario === nombreUsuario);
-// };
+        return usuarios.some((usuario) => usuario === nombreUsuario);
+    } catch (error) {
+        console.error('Error al comprobar existencia de usuario:', error);
+        return false;
+    }
+};
 
-// export const getUsers = async () => {
-//     const response = await fetch(`${URL_API}/users`);
+export const getUsers = async () => {
+    try {
+        const response = await fetch(`${URL_API}/users`);
 
-//     if (!response.ok) throw new Error('Error al obtener usuarios');
+        if (!response.ok) throw new Error('Error al obtener usuarios');
 
-//     const data = await response.json();
+        const data = await response.json();
 
-//     return data.users.map((usuario) => usuario.name);
-// };
+        return data.users.map((usuario) => usuario.name);
+    } catch (error) {
+        console.error('Error al obtener usuarios:', error);
+    }
+};
 
 export const postUser = async () => {
     try {
@@ -32,13 +41,13 @@ export const postUser = async () => {
 };
 
 export const getTodos = async () => {
-    let response = await fetch(`${URL_API}/users/${USUARIO}`);
+    const response = await fetch(`${URL_API}/users/${USUARIO}`);
 
-    if (response.status === 404) {
-        await postUser();
+    // if (response.status === 404) {
+    //     await postUser();
 
-        response = await fetch(`${URL_API}/users/${USUARIO}`);
-    }
+    //     response = await fetch(`${URL_API}/users/${USUARIO}`);
+    // }
 
     if (!response.ok) throw new Error('Error al obtener tareas');
 

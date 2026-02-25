@@ -9,11 +9,37 @@ import { toast } from 'react-toastify';
 import Swal from 'sweetalert2';
 import './TodoListComponent.css';
 
+const USUARIO = 'jhonyes04';
+
 export const TodoListComponent = () => {
     const [tareas, setTareas] = useState([]);
 
     useEffect(() => {
-        obtenerTareas();
+        // api.existeUsuario(USUARIO)
+        //     .then((existe) => {
+        //         if (!existe) return api.postUser(USUARIO);
+
+        //         return null;
+        //     })
+        //     .then(() => {
+        //         obtenerTareas();
+        //     })
+        //     .catch((error) =>
+        //         console.error('Error al comprobar usuario:', error),
+        //     );
+        const comprobarUsuario = async (nombreUsuario) => {
+            try {
+                const existe = await api.existeUsuario(nombreUsuario);
+
+                if (!existe) await api.postUser(nombreUsuario);
+
+                obtenerTareas();
+            } catch (error) {
+                console.error('Error al comprobar usuario:', error);
+            }
+        };
+
+        comprobarUsuario(USUARIO);
     }, []);
 
     const obtenerTareas = async () => {
