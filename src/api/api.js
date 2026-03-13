@@ -26,9 +26,9 @@ export const getUsers = async () => {
     }
 };
 
-export const postUser = async () => {
+export const postUser = async (nombreUsuario) => {
     try {
-        const response = await fetch(`${URL_API}/users/${USUARIO}`, {
+        const response = await fetch(`${URL_API}/users/${nombreUsuario}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
         });
@@ -42,12 +42,6 @@ export const postUser = async () => {
 
 export const getTodos = async () => {
     const response = await fetch(`${URL_API}/users/${USUARIO}`);
-
-    // if (response.status === 404) {
-    //     await postUser();
-
-    //     response = await fetch(`${URL_API}/users/${USUARIO}`);
-    // }
 
     if (!response.ok) throw new Error('Error al obtener tareas');
 

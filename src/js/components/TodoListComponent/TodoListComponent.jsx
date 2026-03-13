@@ -15,18 +15,6 @@ export const TodoListComponent = () => {
     const [tareas, setTareas] = useState([]);
 
     useEffect(() => {
-        // api.existeUsuario(USUARIO)
-        //     .then((existe) => {
-        //         if (!existe) return api.postUser(USUARIO);
-
-        //         return null;
-        //     })
-        //     .then(() => {
-        //         obtenerTareas();
-        //     })
-        //     .catch((error) =>
-        //         console.error('Error al comprobar usuario:', error),
-        //     );
         const comprobarUsuario = async (nombreUsuario) => {
             try {
                 const existe = await api.existeUsuario(nombreUsuario);
